@@ -29,21 +29,7 @@ namespace EnglishWords.Context
                     .HasDefaultValueSql("current_timestamp()");
             modelBuilder.Entity<User>().Property(u => u.LastUpdateDate).HasColumnType("datetime")
                     .HasDefaultValueSql("current_timestamp()");
-            modelBuilder.Entity<Word>().HasIndex(w => w.WordText).IsUnique();
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
-
-            //using (var context = new ApplicationDbContext())
-            //{
-            //    context.Database.EnsureCreated(); // Create the database if it doesn't exist
-
-            //    var isWord = context.Word.FirstOrDefault(b => b.WordText == "test");
-            //    if (isWord == null)
-            //    {
-            //        context.Word.Add(new Word { WordText = "test", WordTranslate = "test", IsLearning = false, CreateAtDate = DateTime.Now });
-            //    }
-
-            //    context.SaveChanges();
-            //}
 
         }
     }

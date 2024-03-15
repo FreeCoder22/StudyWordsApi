@@ -4,6 +4,7 @@ using EnglishWords.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnglishWords.Context.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240312124639_add-userid-in-word")]
+    partial class adduseridinword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +62,7 @@ namespace EnglishWords.Context.Migrations
                     b.Property<DateTime?>("CreateAtDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<bool>("IsLearned")
+                    b.Property<bool>("IsLearning")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime?>("LastUpdateDate")
@@ -73,7 +76,7 @@ namespace EnglishWords.Context.Migrations
 
                     b.Property<string>("WordText")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("WordTranslate")
                         .IsRequired()
@@ -82,6 +85,9 @@ namespace EnglishWords.Context.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("WordText")
+                        .IsUnique();
 
                     b.ToTable("Word");
                 });

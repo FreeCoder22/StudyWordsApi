@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnglishWords.Context.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240229092559_int")]
-    partial class @int
+    [Migration("20240312095950_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,8 @@ namespace EnglishWords.Context.Migrations
 
             modelBuilder.Entity("EnglishWords.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("CreateAtDate")
                         .HasColumnType("datetime(6)");
@@ -73,8 +70,9 @@ namespace EnglishWords.Context.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("current_timestamp()");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("WordText")
                         .IsRequired()
