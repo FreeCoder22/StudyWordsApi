@@ -15,7 +15,6 @@ builder.Services.AddDbContext<ApplicationDbContext>();
 
 
 
-
 var app = builder.Build();
 
 
@@ -25,7 +24,13 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
+
         context.Database.Migrate();
+        DataSeed dataSeed = new DataSeed(context);
+        dataSeed.CreateUser();
+        dataSeed.CreateWords();
+        dataSeed.CreateWordsLearned();
+
     }
     catch (Exception ex)
     {

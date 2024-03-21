@@ -40,7 +40,7 @@ namespace EnglishWordsApi.Controllers
         [HttpGet("user/random/{userId}")]
         public async Task<ActionResult<IEnumerable<Word>>> GetWordRandomByUserId(string userId)
         {
-            return Ok(await _context.Word.Where(w => w.User.Id == userId && !w.IsLearned).Take(2).ToListAsync());
+            return Ok(await _context.Word.Where(w => w.User.Id == userId && !w.IsLearned).Take(10).ToListAsync());
              
         }
         // GET: api/Words/5
