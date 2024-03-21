@@ -1,5 +1,6 @@
 using EnglishWords.Context;
 using EnglishWords.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,25 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>();
 
+
+
+
 var app = builder.Build();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        throw new Exception(ex.ToString());
+    }
+}
 
 app.UseCors(builder =>
     builder.WithOrigins("http://localhost:5173") 
