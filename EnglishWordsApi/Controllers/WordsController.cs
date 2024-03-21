@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EnglishWords.Context;
 using EnglishWords.Models;
 using DeepL;
+using Polly;
 
 namespace EnglishWordsApi.Controllers
 {
@@ -26,15 +27,22 @@ namespace EnglishWordsApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Word>>> GetWord()
         {
-            return await _context.Word.ToListAsync();
+            var words = await _context.Word.ToListAsync();
+            return words;
         }
         // GET: api/Words
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<Word>>> GetWordByUserId(string userId)
         {
-            return await _context.Word.Where(w => w.User.Id == userId).ToListAsync();
+            return Ok(await _context.Word.Where(w => w.User.Id == userId).ToListAsync());
         }
-
+        // GET: api/Words
+        [HttpGet("user/random/{userId}")]
+        public async Task<ActionResult<IEnumerable<Word>>> GetWordRandomByUserId(string userId)
+        {
+            return Ok(await _context.Word.Where(w => w.User.Id == userId && !w.IsLearned).Take(10).ToListAsync());
+             
+        }
         // GET: api/Words/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Word>> GetWord(string id)
@@ -46,7 +54,7 @@ namespace EnglishWordsApi.Controllers
                 return NotFound();
             }
 
-            return word;
+            return Ok(word);
         }
 
         // PUT: api/Words/5
@@ -85,7 +93,7 @@ namespace EnglishWordsApi.Controllers
                 }
             }
 
-            return word;
+            return Ok(word);
         }
 
         // POST: api/Words
@@ -114,19 +122,19 @@ namespace EnglishWordsApi.Controllers
         }
 
         // DELETE: api/Words/5
-        [HttpDelete]
-        public async Task<IActionResult> DeleteWord([FromBody] string[] data)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<string>> DeleteWord(string id)
         {
-            var word = _context.Word.Where(word => data.Contains(word.Id));
+            var word = await _context.Word.FirstOrDefaultAsync(w => w.Id == id);
             if (word == null)
             {
                 return NotFound();
             }
 
-            _context.Word.RemoveRange(word);
+            _context.Word.Remove(word);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(id);
         }
 
         private bool WordExists(string id)
