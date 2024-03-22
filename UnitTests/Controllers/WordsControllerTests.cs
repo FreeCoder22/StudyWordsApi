@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using Moq;
-using EnglishWords.Models;
-using EnglishWordsApi.Controllers;
-using EnglishWordsApi.interfaces;
+using StudyWords.Models;
+using StudyWordsApi.Controllers;
+using StudyWordsApi.interfaces;
 using NuGet.Protocol.Core.Types;
 using AutoFixture;
-using EnglishWords.Context;
-namespace EnglishWords.Tests
+using StudyWords.Context;
+namespace StudyWords.Tests
 {
     [TestFixture]
     public class WordsControllerTests
