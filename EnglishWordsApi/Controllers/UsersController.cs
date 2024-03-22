@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EnglishWords.Context;
 using EnglishWords.Models;
+using EnglishWordsApi.interfaces;
 
 namespace EnglishWordsApi.Controllers
 {
@@ -15,24 +16,30 @@ namespace EnglishWordsApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IUserRepository _userRepository;
+        public UsersController(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(ApplicationDbContext context, IUserRepository userRepository)
         {
             _context = context;
+            _userRepository = userRepository;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<IEnumerable<User>> GetUsers()
         {
-            return await _context.User.ToListAsync();
+            return await _userRepository.GetUsers();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<User>> GetUserById(string id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _userRepository.GetUserById(id);
 
             if (user == null)
             {
@@ -42,67 +49,19 @@ namespace EnglishWordsApi.Controllers
             return user;
         }
 
-        // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(string id, User user)
+        // GET: api/Users?email={email}
+        [HttpGet("email/{email}")]
+        public async Task<ActionResult<User>> GetUserByEmail(string email)
         {
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
+            var user = await _userRepository.GetUserByEmail(email);
 
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
-        {
-            _context.User.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
-        }
-
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var user = await _context.User.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return user;
         }
 
-        private bool UserExists(string id)
-        {
-            return _context.User.Any(e => e.Id == id);
-        }
     }
 }
