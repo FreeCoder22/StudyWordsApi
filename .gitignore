@@ -43,3 +43,7 @@ msbuild.err
 msbuild.wrn
 appsettings.json
 appsettings.*.json
+StudyWordsApi/appsettings.json
+StudyWordsApi/appsettings.*.json
+*/appsettings.json
+*/appsettings.*.json
