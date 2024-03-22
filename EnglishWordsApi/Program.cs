@@ -1,5 +1,7 @@
 using EnglishWords.Context;
 using EnglishWords.Models;
+using EnglishWordsApi.interfaces;
+using EnglishWordsApi.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 
@@ -12,6 +14,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IWordsRepository, WordsRepository>();
 
 
 

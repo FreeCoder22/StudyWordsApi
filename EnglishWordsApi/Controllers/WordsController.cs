@@ -9,6 +9,7 @@ using EnglishWords.Context;
 using EnglishWords.Models;
 using DeepL;
 using Polly;
+using EnglishWordsApi.interfaces;
 
 namespace EnglishWordsApi.Controllers
 {
@@ -16,38 +17,54 @@ namespace EnglishWordsApi.Controllers
     [ApiController]
     public class WordsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IWordsRepository _wordsRepository;
 
-        public WordsController(ApplicationDbContext context)
+        public WordsController(IWordsRepository wordsRepository)
         {
-            _context = context;
+            _wordsRepository = wordsRepository;
         }
 
         // GET: api/Words
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Word>>> GetWord()
+        public async Task<ActionResult<IEnumerable<Word>>> GetWords()
         {
-            var words = await _context.Word.ToListAsync();
-            return words;
+            var words = await _wordsRepository.GetWords();
+
+            if (words == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(words);
         }
         // GET: api/Words
         [HttpGet("user/{userId}")]
-        public async Task<ActionResult<IEnumerable<Word>>> GetWordByUserId(string userId)
+        public async Task<ActionResult<IEnumerable<Word>>> GetWordsByUserId(string userId)
         {
-            return Ok(await _context.Word.Where(w => w.User.Id == userId).ToListAsync());
+            var words = await _wordsRepository.GetWordsByUserId(userId);
+            if (words == null)
+            {
+                return NotFound();
+            }
+            return Ok(words);
         }
         // GET: api/Words
         [HttpGet("user/random/{userId}")]
         public async Task<ActionResult<IEnumerable<Word>>> GetWordRandomByUserId(string userId)
         {
-            return Ok(await _context.Word.Where(w => w.User.Id == userId && !w.IsLearned).Take(10).ToListAsync());
-             
+            var words = await _wordsRepository.GetWordRandomByUserId(userId);
+            if (words == null)
+            {
+                return NotFound();
+            }
+            return Ok(words);
+
         }
         // GET: api/Words/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Word>> GetWord(string id)
+        public async Task<ActionResult<Word>> GetWordById(string id)
         {
-            var word = await _context.Word.FindAsync(id);
+            var word = await _wordsRepository.GetWordById(id);
 
             if (word == null)
             {
@@ -66,34 +83,12 @@ namespace EnglishWordsApi.Controllers
             {
                 return BadRequest();
             }
-            var authKey = "e35db37a-82fb-4559-9778-84060ed1b487:fx"; // Replace with your key
 
-            var translator = new Translator(authKey);
-            var translatedText = await translator.TranslateTextAsync(
-      word.WordText,
-      LanguageCode.English,
-      LanguageCode.French );
-            Console.WriteLine(translatedText);
-            word.WordTranslate = translatedText.Text;
-            _context.Entry(word).State = EntityState.Modified;
+            var wordUpdate = await _wordsRepository.PutWord(id, word);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!WordExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            
 
-            return Ok(word);
+            return Ok(wordUpdate);
         }
 
         // POST: api/Words
@@ -101,22 +96,9 @@ namespace EnglishWordsApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Word>> PostWord(Word word)
         {
-            _context.Word.Add(word);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (WordExists(word.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var wordResult = await _wordsRepository.PostWord(word);
+
+           
 
             return CreatedAtAction("GetWord", new { id = word.Id }, word);
         }
@@ -125,21 +107,16 @@ namespace EnglishWordsApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<string>> DeleteWord(string id)
         {
-            var word = await _context.Word.FirstOrDefaultAsync(w => w.Id == id);
-            if (word == null)
+            var IdWord = await _wordsRepository.DeleteWord(id);
+
+            if (IdWord == null)
             {
                 return NotFound();
             }
 
-            _context.Word.Remove(word);
-            await _context.SaveChangesAsync();
-
-            return Ok(id);
+            return Ok(IdWord);
         }
 
-        private bool WordExists(string id)
-        {
-            return _context.Word.Any(e => e.Id == id);
-        }
+    
     }
 }
