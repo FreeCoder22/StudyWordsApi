@@ -1,1 +1,1 @@
-# EnglishWordsApi
+# StudyWordsApi

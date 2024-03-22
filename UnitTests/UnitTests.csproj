@@ -20,9 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EnglishWords.Context\EnglishWords.Context.csproj" />
-    <ProjectReference Include="..\EnglishWords.Models\EnglishWords.Models.csproj" />
-    <ProjectReference Include="..\EnglishWordsApi\EnglishWordsApi.csproj" />
+    <ProjectReference Include="..\StudyWords.Context\StudyWords.Context.csproj" />
+    <ProjectReference Include="..\StudyWords.Models\StudyWords.Models.csproj" />
+    <ProjectReference Include="..\StudyWordsApi\StudyWordsApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
