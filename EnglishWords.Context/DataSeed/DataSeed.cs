@@ -42,8 +42,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "être",
-                    WordTranslate = "be",
+                    WordText = "Be",
+                    WordTranslate = "Être",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = false,
@@ -53,8 +53,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "devenir",
-                    WordTranslate = "become",
+                    WordText = "Become",
+                    WordTranslate = "Devenir",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = false,
@@ -64,8 +64,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "commencer",
-                    WordTranslate = "begin",
+                    WordText = "Begin",
+                    WordTranslate = "Commencer",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = false,
@@ -75,8 +75,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "offrir",
-                    WordTranslate = "bid",
+                    WordText = "Bid",
+                    WordTranslate = "Offrir",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = false,
@@ -86,8 +86,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "saigner",
-                    WordTranslate = "bleed",
+                    WordText = "Bleed",
+                    WordTranslate = "Saigner",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = false,
@@ -97,8 +97,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "casser",
-                    WordTranslate = "break",
+                    WordText = "Break",
+                    WordTranslate = "Casser",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = false,
@@ -108,8 +108,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "apporter",
-                    WordTranslate = "Bring",
+                    WordText = "Bring",
+                    WordTranslate = "Apporter",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = false,
@@ -119,8 +119,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "construire",
-                    WordTranslate = "Build",
+                    WordText = "Build",
+                    WordTranslate = "Construire",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = false,
@@ -130,8 +130,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "brûler",
-                    WordTranslate = "burn",
+                    WordText = "Burn",
+                    WordTranslate = "Brûler",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = false,
@@ -141,8 +141,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "acheter",
-                    WordTranslate = "buy",
+                    WordText = "Buy",
+                    WordTranslate = "Acheter",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = false,
@@ -169,8 +169,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "dormir",
-                    WordTranslate = "sleep",
+                    WordText = "Sleep",
+                    WordTranslate = "Dormir",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = true,
@@ -180,8 +180,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "envoyer",
-                    WordTranslate = "send",
+                    WordText = "Send",
+                    WordTranslate = "Envoyer",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = true,
@@ -191,8 +191,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "vendre",
-                    WordTranslate = "sell",
+                    WordText = "Sell",
+                    WordTranslate = "Vendre",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = true,
@@ -202,8 +202,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "voir",
-                    WordTranslate = "see",
+                    WordText = "See",
+                    WordTranslate = "Voir",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = true,
@@ -213,8 +213,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "dire",
-                    WordTranslate = "say",
+                    WordText = "Say",
+                    WordTranslate = "Dire",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = true,
@@ -224,8 +224,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "courir",
-                    WordTranslate = "run",
+                    WordText = "Run",
+                    WordTranslate = "Courir",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = true,
@@ -235,8 +235,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "apporter",
-                    WordTranslate = "Bring",
+                    WordText = "Bring",
+                    WordTranslate = "Apporter",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = true,
@@ -246,8 +246,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "louer",
-                    WordTranslate = "rent",
+                    WordText = "Rent",
+                    WordTranslate = "Louer",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = true,
@@ -257,8 +257,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "mettre",
-                    WordTranslate = "put",
+                    WordText = "Put",
+                    WordTranslate = "Mettre",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = true,
@@ -268,8 +268,8 @@ namespace EnglishWords.Context
                 {
 
                     Id = Guid.NewGuid().ToString(),
-                    WordText = "payer",
-                    WordTranslate = "pay",
+                    WordText = "pay",
+                    WordTranslate = "Payer",
                     CreateAtDate = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     IsLearned = true,

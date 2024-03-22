@@ -5,6 +5,7 @@ using EnglishWordsApi.interfaces;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace EnglishWordsApi.Repositories
 {
@@ -12,10 +13,12 @@ namespace EnglishWordsApi.Repositories
     {
 
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public WordsRepository(ApplicationDbContext context)
+        public WordsRepository(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         public async Task<IEnumerable<Word>> GetWords()
@@ -62,10 +65,7 @@ namespace EnglishWordsApi.Repositories
 
         public async Task<Word> PutWord(string id, Word word)
         {
-            // add in appSettings
-            var authKey = "e35db37a-82fb-4559-9778-84060ed1b487:fx"; // Replace with your key
-
-            var translator = new Translator(authKey);
+            var translator = new Translator(_configuration.GetValue<string>("DeepL:ApiKey"));
             var translatedText = await translator.TranslateTextAsync(word.WordText, LanguageCode.English, LanguageCode.French);
 
             word.WordTranslate = translatedText.Text;

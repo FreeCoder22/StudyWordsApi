@@ -1,5 +1,6 @@
 ﻿using EnglishWords.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,10 +10,12 @@ namespace EnglishWords.Context
 {
     public class ApplicationDbContext : DbContext
     {
+        private readonly IConfiguration _configuration;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
           : base(options)
         {
+            _configuration = configuration;
         }
 
         public DbSet<Word> Word { get; set; }
@@ -21,7 +24,7 @@ namespace EnglishWords.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var serverVersion = new MySqlServerVersion(new Version(8, 3, 0));
-            optionsBuilder.UseMySql("Server=localhost; Port=3307; User ID=root; Password=abc123$$; Database=StudyWords;", serverVersion);
+            optionsBuilder.UseMySql(_configuration.GetConnectionString("DefaultConnection"), serverVersion);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
