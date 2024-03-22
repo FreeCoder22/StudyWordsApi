@@ -40,49 +40,52 @@ namespace EnglishWords.Tests
             var result = await _controller.GetUsers();
 
             // Assert
-            Assert.NotNull(result);
-            Assert.That(result, Is.EqualTo(expectedResult));
-            Assert.That(3, Is.EqualTo(result.Count()));
-            var allNames = result.Select(user => user.Email).ToList();
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            var returnedUsers = okResult.Value as List<User>;
+
+            Assert.NotNull(okResult);
+            Assert.That(returnedUsers, Is.EqualTo(expectedResult));
+            Assert.That(3, Is.EqualTo(returnedUsers.Count()));
+            var allNames = returnedUsers.Select(user => user.Email).ToList();
             var uniqueNames = new HashSet<string>(allNames);
             Assert.That(allNames.Count, Is.EqualTo(uniqueNames.Count));
         }
 
-        [Test]
-        public async Task GetUserByEmail_ReturnsResult_WithUser()
-        {
-            Fixture fixture = new Fixture();
 
-            var expectedResult = _fixture.Build<User>().Without(p => p.Words).Create();
-            Assert.NotNull(expectedResult);
-            if (expectedResult == null) return;
-            _mockRepo.Setup(repo => repo.GetUserByEmail(expectedResult.Id)).ReturnsAsync(expectedResult); 
+        [Test]
+        public async Task GetUserByEmail_ReturnsOk_WithUser()
+        {
+            // Arrange
+            var user = _fixture.Build<User>().Without(p => p.Words).Create();
+            _mockRepo.Setup(repo => repo.GetUserByEmail(user.Email)).ReturnsAsync(user);
 
             // Act
-            var result = await _controller.GetUserByEmail(expectedResult.Id);
+            var result = await _controller.GetUserByEmail(user.Email);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.That(result.Value, Is.EqualTo(expectedResult));
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            var returnedUser = okResult.Value as User;
+            Assert.That(user, Is.EqualTo(returnedUser));
         }
 
         [Test]
-        public async Task GetUserById_ReturnsResult_WithUser()
+        public async Task GetUserById_ReturnsOk_WithUser()
         {
-            Fixture fixture = new Fixture();
-
-            var expectedResult = _fixture.Build<User>().Without(p => p.Words).Create();
-            Assert.NotNull(expectedResult);
-            if (expectedResult == null) return;
-            _mockRepo.Setup(repo => repo.GetUserById(expectedResult.Id)).ReturnsAsync(expectedResult);
+            // Arrange
+            var user = _fixture.Build<User>().Without(p => p.Words).Create();
+            _mockRepo.Setup(repo => repo.GetUserById(user.Id)).ReturnsAsync(user);
 
             // Act
-            var result = await _controller.GetUserById(expectedResult.Id);
+            var result = await _controller.GetUserById(user.Id);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.That(result.Value, Is.EqualTo(expectedResult));
-        }
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            var returnedUser = okResult.Value as User;
+            Assert.That(user, Is.EqualTo(returnedUser));
 
+        }
     }
 }

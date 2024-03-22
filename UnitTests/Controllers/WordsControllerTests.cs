@@ -37,7 +37,7 @@ namespace EnglishWords.Tests
             _mockRepo.Setup(repo => repo.GetUsers()).ReturnsAsync(expectedResult);
 
             // Act
-            var result = await _controller.GetUsers();
+            var result = (await _controller.GetUsers()).Value;
 
             // Assert
             Assert.NotNull(result);

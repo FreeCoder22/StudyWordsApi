@@ -15,24 +15,23 @@ namespace EnglishWordsApi.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly IUserRepository _userRepository;
         public UsersController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        public UsersController(ApplicationDbContext context, IUserRepository userRepository)
-        {
-            _context = context;
-            _userRepository = userRepository;
-        }
-
         // GET: api/Users
         [HttpGet]
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _userRepository.GetUsers();
+            var users = await _userRepository.GetUsers();
+            if (users == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(users);
         }
 
         // GET: api/Users/5
@@ -46,7 +45,7 @@ namespace EnglishWordsApi.Controllers
                 return NotFound();
             }
 
-            return user;
+            return Ok(user);
         }
 
         // GET: api/Users?email={email}
@@ -60,7 +59,7 @@ namespace EnglishWordsApi.Controllers
                 return NotFound();
             }
 
-            return user;
+            return Ok(user);
         }
 
     }
